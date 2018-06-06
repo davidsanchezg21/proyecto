@@ -10,6 +10,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include "bola.h"
+#include "movimientos.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,10 +24,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     bola *get_carro();
+private slots:
+    void on_pushButton_clicked();
+    void mover();
+
 private:
+
+    double x;
+    double y;
     Ui::MainWindow *ui;
     QGraphicsScene* scene;
     bola *Bolas;
+    QTimer *timer;
+    movimientos *mov;
 
 };
 

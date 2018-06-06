@@ -28,7 +28,7 @@ bola::bola()
 
 QRectF bola::boundingRect() const
 {
-    return QRectF(25,370,30,30);
+    return QRectF(-15,-15,30,30);
 
 }
 
@@ -47,6 +47,6 @@ void bola::posiciones(float _Px, float _Py)
 
 void bola::movimiento()
 {
-    setPos(Px,Py);
+    setPos(Px,-Py);
 }
 
