@@ -50,3 +50,8 @@ void bola::movimiento()
     setPos(Px,-Py);
 }
 
+/*movimientos *bola::mov_bola()
+{
+    return moverbola;
+}
+*/

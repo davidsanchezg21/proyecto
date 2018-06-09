@@ -2,6 +2,7 @@
 #define BOLA_H
 #include <QGraphicsItem>
 #include <QPainter>
+#include "movimientos.h"
 
 
 class bola:public QObject,
@@ -10,14 +11,16 @@ class bola:public QObject,
 private:
     float Px;
     float Py;
+   // /movimientos *moverbola;
+
 public:
     bola();
     QRectF boundingRect() const;
     void paint(QPainter *painter,const QStyleOptionGraphicsItem *option, QWidget *widget);
     void posiciones(float _Px, float _Py);
     void movimiento();
-    bola *get_carro();
 
+    //movimientos *mov_bola();
     float getPx() const;
     float getPy() const;
 

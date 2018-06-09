@@ -27,7 +27,7 @@ public:
 private slots:
     void on_pushButton_clicked();
     void mover();
-
+    void colision();
 private:
 
     double x;
@@ -37,6 +37,15 @@ private:
     bola *Bolas;
     QTimer *timer;
     movimientos *mov;
+    QGraphicsLineItem *l1;
+    QGraphicsRectItem* rect1;
+    QGraphicsRectItem* rect2;
+    QGraphicsRectItem* rect3;
+    QGraphicsRectItem* rect4;
+    QGraphicsRectItem* obst1;
+    QGraphicsRectItem* obst2;
+
+
 
 };
 
