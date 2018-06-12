@@ -28,16 +28,19 @@ SOURCES += \
         mainwindow.cpp \
     bola.cpp \
     obstaculos.cpp \
-    canasta.cpp
+    canasta.cpp \
+    acceso.cpp
 
 HEADERS += \
         mainwindow.h \
     bola.h \
     obstaculos.h \
-    canasta.h
+    canasta.h \
+    acceso.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    acceso.ui
 
 RESOURCES += \
     imagenes.qrc

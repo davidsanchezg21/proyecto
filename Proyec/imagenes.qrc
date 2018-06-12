@@ -5,5 +5,6 @@
         <file>fon1.jpg</file>
         <file>barra.jpg</file>
         <file>cesta.png</file>
+        <file>control.png</file>
     </qresource>
 </RCC>
