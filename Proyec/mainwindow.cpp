@@ -7,27 +7,34 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
-     x=25;
-     y=-370;
-    ui->setupUi(this);
+    x=15;
+    y=15;
     timer = new QTimer;
-    scene=new QGraphicsScene(0,0,700,400);
-    l1 = new QGraphicsLineItem(0,0,700,0);
+
+    ui->setupUi(this);
+    scene=new QGraphicsScene;
     ui->graphicsView->setScene(scene);
+    scene->setSceneRect(0,-500,1300,500);
+    scene->addRect(scene->sceneRect());
     ui->graphicsView->setBackgroundBrush(QBrush(QImage(":/fon1.jpg")));
+
     Bolas= new bola;
     Bolas->posiciones(x,y);
     Bolas->movimiento();
     scene->addItem(Bolas);
     connect(timer,SIGNAL(timeout()),this,SLOT(mover()));
-    //canasta
-    rect1 = scene->addRect(620,350,1,30);//rect dercha
-    rect2= scene->addRect(550,350,1,30);//rect izq
-    rect3= scene->addRect(550,340,70,1);//rect arriba
-    rect4= scene->addRect(550,380,70,1);//rect abajo
-    //obtaculos
-    obst1 =scene->addRect(325,280,60,20);//izquier
-    obst2 =scene->addRect(445,300,60,20);//derecha
+
+    obst.push_back(new obstaculos(900,20,60,100,0,5));
+    obst.back()->mover();
+    scene->addItem(obst.back());
+
+    obst.push_back(new obstaculos(140,20,60,50,0,5));
+    obst.back()->mover();
+    scene->addItem(obst.back());
+
+    cesta=new canasta(1265,-35);
+    cesta->graficar();
+    scene->addItem(cesta);
 
 }
 
@@ -41,6 +48,19 @@ bola *MainWindow::get_carro()
     return Bolas;
 }
 
+void MainWindow::colisiones()
+{
+/*    for(int i = 0; i < obstaculos.size();i++){
+        j=-1;
+        float ce = 0.5;
+        if(obstaculos.itera(i)->collidesWithItem(Bolas)){
+            obstaculos.itera(i)->mover()->setveloc(-j*obstaculos.at(i)->mover()->getvx(),j*ce*obstaculo.at(i)->mov_esfera()->getvy());
+
+}
+    }
+}
+*/
+}
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -48,10 +68,11 @@ void MainWindow::on_pushButton_clicked()
    // double x=Bolas->getPx();
    // double y=Bolas->getPy();
 
-    double v=40;
-    double a=45;
+    double v=ui->vel->text().toDouble();
+    double a=ui->ang->text().toDouble();
     double rad= (a/180)*3.1416;
-    mov= new movimientos(v,x,y,rad);
+    Bolas->salto_ini(v,x,y,rad);
+
 
 
     timer->start(20);
@@ -60,14 +81,25 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::mover()
 {
-  mov->MovimientoParabolico();
-  Bolas->posiciones(mov->getPosx(),mov->getPosy());
-  Bolas->movimiento();
+   //iterador que recorre la lista
+    for(list<obstaculos*>::iterator iterador=obst.begin(); iterador!=obst.end();++iterador){
+      (*iterador)->mover();
+      if((*iterador)->collidesWithItem(Bolas)){
+    //          Bolas->setPx((*iterador)->getposx());
+    //          Bolas->setPy((*iterador)->getPosy());
+
+          Bolas->setPx(0);
+          Bolas->setPy(0);
+          Bolas->setVy_ini(0);
+          Bolas->setVx_ini(0);
+      }
+    }
+    if(Bolas->collidesWithItem(cesta)){
+        Bolas->setPx(0);
+        Bolas->setPy(0);
+    }
+    Bolas->choque_bordes();
+
 }
 
-void MainWindow::colision()
-{
-    if(Bolas->collidesWithItem(l1)){
-      //movimientos.MovimientoParabolico();
-    }
-}
+

@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     bola.cpp \
-    movimientos.cpp
+    obstaculos.cpp \
+    canasta.cpp
 
 HEADERS += \
         mainwindow.h \
     bola.h \
-    movimientos.h
+    obstaculos.h \
+    canasta.h
 
 FORMS += \
         mainwindow.ui

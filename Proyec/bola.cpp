@@ -1,29 +1,9 @@
 #include "bola.h"
 
-
-float bola::getPx() const
-{
-    return Px;
-}
-
-void bola::setPx(float value)
-{
-    Px = value;
-}
-
-float bola::getPy() const
-{
-    return Py;
-}
-
-void bola::setPy(float value)
-{
-    Py = value;
-}
-
 bola::bola()
 {
-
+    posy =0;
+    posx =0;
 }
 
 QRectF bola::boundingRect() const
@@ -39,19 +19,88 @@ void bola::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawPixmap(boundingRect(),pixmap,pixmap.rect());
 }
 
-void bola::posiciones(float _Px, float _Py)
+void bola::posiciones(double _Px, double _Py)
 {
-   Px=_Px;
-   Py=_Py;
+   posx=_Px;
+   posy=_Py;
 }
 
 void bola::movimiento()
 {
-    setPos(Px,-Py);
+    setPos(posx,-posy);
 }
 
-/*movimientos *bola::mov_bola()
+void bola::choque_bordes()
 {
-    return moverbola;
+    MovimientoParabolico();
+    if(posx-15<=0){
+        posx=15;
+        vx=-Ce*vx;
+    }
+    if(posx+15>=1300){
+        posx=1300-15;
+        vx=0;
+    }
+    if(posy-15<=0){
+        posy=15;
+        posx=15;
+        vy=0;
+    }
+    if(posy+15>=500){
+        posy=500-15;
+        vy=-Ce*vy;
+    }
+
+    movimiento();
 }
-*/
+
+void bola::salto_ini(double vi, double x, double y, double ang)
+{
+    vx=vi*cos(ang);
+    vy=vi*sin(ang);
+    posx=x;
+    posy=y;
+    angulo=ang;
+}
+
+void bola::MovimientoParabolico()
+{
+
+    vy=vy+(-G)*Delta;
+    posx=posx+vx*Delta;
+    posy=posy+vy*Delta+(0.5*(-G)*Delta*Delta);
+}
+double bola::getVx_ini() const
+{
+    return vx;
+}
+
+float bola::getPx() const
+{
+    return posx;
+}
+
+void bola::setPx(double value)
+{
+    posx = value;
+}
+
+float bola::getPy() const
+{
+    return posy;
+}
+
+void bola::setPy(double value)
+{
+    posy = value;
+}
+
+
+void bola::setVy_ini(double value)
+{
+    vy = value;
+}
+void bola::setVx_ini(double value)
+{
+    vx = value;
+}
